@@ -13,6 +13,7 @@ import numpy as np
 import zipfile
 import shutil
 import matplotlib.pyplot as plt
+import seaborn as sns
 plt.style.use('fivethirtyeight')
 
 ! pip install -q kaggle
@@ -25,7 +26,7 @@ pip install -U kaggle==1.5.3
 ! kaggle datasets download -d berkeleyearth/climate-change-earth-surface-temperature-data
 ! kaggle datasets download -d rtatman/iris-dataset-json-version
 ruta_zip="/home/nalle/iris-dataset-json-version.zip"
-ruta_extraccion = "/home/nalle/Escritorio/Caso_Práctico/iris-dataset-json-version.zip"
+ruta_extraccion = "/home/nalle/Documentos/Caso/iris-dataset-json-version.zip"
 password = None
 archivo_zip = zipfile.ZipFile(ruta_zip, "r")
 try:
@@ -34,10 +35,10 @@ try:
 except:
     pass
 archivo_zip.close()
-shutil.move("/home/nalle/Escritorio/Caso_Práctico/iris-dataset-json-version.zip/iris.json","/home/nalle/Escritorio/Caso_Práctico/iris.json")
+shutil.move("/home/nalle/Documentos/Caso/iris-dataset-json-version.zip/iris.json","/home/nalle/Documentos/Caso/iris.json")
 
 #Estructurando datos en un dataframe
-df=pd.read_json("/home/nalle/Escritorio/Caso_Práctico/iris.json",orient='columns')
+df=pd.read_json("/home/nalle/Documentos/Caso/iris.json",orient='columns')
 df.head(10)
 
 #Explorando datos
@@ -68,16 +69,12 @@ x.describe()
 x.mean()
 df['sepalWidth'].replace(np.nan,3.4,inplace=True)
 df['species'].replace(np.nan,"setosa",inplace=True)
-
+df
 #Guarda el dataframe en archivo .csv
 df.to_csv('iris.csv')
 
-!git init 
-!git status
-!git add .
-!git status
-!git commit -m "segunda carga"
-!git push -u origin nalle@nalle-HP-Pavilion-Notebook
-
-
+plt.figure()
+plt.title( 'Especie')
+sns.countplot(df["specie"])
+plt.show()
 
